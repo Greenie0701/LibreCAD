@@ -334,7 +334,7 @@ jobs:
           platform_version: 2025
           boost_install_dir: ${{ github.workspace }}/../
           toolset: msvc
-          arch: arm
+          arch: aarch64
 
       - name: Configure CMake
         run: |
