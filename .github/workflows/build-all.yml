@@ -313,9 +313,9 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.8.*'
-          host: 'windows_arm64'
-          arch: 'win64_msvc2022_arm64'
+          version: '6.9.*'
+          host: 'windows'
+          arch: 'win64_msvc2022_arm64_cross_compiled'
           target: 'desktop'
           tools-only: 'false'
           modules: 'qt3d qt5compat qtimageformats qtshadertools'
