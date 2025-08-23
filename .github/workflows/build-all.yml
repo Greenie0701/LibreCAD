@@ -340,7 +340,7 @@ jobs:
         run: |
           curl -L https://github.com/lowkeyrossi/prebuilt-boost/releases/download/1.89.0/boost-1.89.0-windows-11-arm-msvc-shared-arm64.tar.gz -o boost.tar.gz
           tar -xzf boost.tar.gz
-          ren boost-1.89.0-windows-11-arm-msvc-shared-arm64 boost-arm64
+          mv boost-1.89.0-windows-11-arm-msvc-shared-arm64 boost-arm64
         shell: bash
     
       - name: Configure CMake
