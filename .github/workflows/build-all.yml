@@ -336,14 +336,22 @@ jobs:
       #     toolset: msvc
       #     arch: aarch64
 
+      - name: Download Boost prebuilt
+        run: |
+          curl -L https://github.com/lowkeyrossi/prebuilt-boost/releases/download/1.89.0/boost-1.89.0-windows-11-arm-msvc-shared-arm64.tar.gz -o boost.tar.gz
+          tar -xzf boost.tar.gz
+          ren boost-1.89.0-windows-11-arm-msvc-shared-arm64 boost-arm64
+        shell: bash
+    
       - name: Configure CMake
         run: |
-          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib 
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" ^
+            -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include ^
+            -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib 
         shell: cmd
         env:
+          BOOST_ROOT: ${{ github.workspace }}\boost-arm64\boost
           BUILD_TYPE: release
-          MSVC_VER_NUMBER: "Visual Studio 17 2022"
-          BOOST_ROOT: ${{ steps.installBoost.outputs.BOOST_ROOT }}
           CMAKE_CXX_FLAGS: " /MP8"
 
       - name: Build
