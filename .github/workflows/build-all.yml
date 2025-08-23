@@ -337,11 +337,21 @@ jobs:
       #     arch: aarch64
 
       - name: Download Boost prebuilt
+        shell: bash
         run: |
           curl -L https://github.com/lowkeyrossi/prebuilt-boost/releases/download/1.89.0/boost-1.89.0-windows-11-arm-msvc-shared-arm64.tar.gz -o boost.tar.gz
+          
+          # Extract
           tar -xzf boost.tar.gz
-          mv boost-1.89.0-windows-11-arm-msvc-shared-arm64 boost-arm64
-        shell: bash
+      
+          # Detect extracted folder (first directory inside tar)
+          EXTRACTED_DIR=$(tar -tzf boost.tar.gz | head -1 | cut -f1 -d"/")
+      
+          # Rename to a known path
+          mv "$EXTRACTED_DIR" boost-arm64
+      
+          ls -R boost-arm64
+
     
       - name: Configure CMake
         run: |
