@@ -331,9 +331,10 @@ jobs:
         id: install-boost
         with:
           boost_version: 1.89.0
-          platform_version: 2025
+          platform_version: 11
           boost_install_dir: ${{ github.workspace }}/../
-          toolset: msvc
+          toolset: arm
+          link: shared
           arch: aarch64
 
       - name: Configure CMake
