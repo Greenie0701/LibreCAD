@@ -326,34 +326,16 @@ jobs:
         with:
           msbuild-architecture: arm64
 
-      # - name: Install boost
-      #   uses: MarkusJx/install-boost@v2
-      #   id: install-boost
-      #   with:
-      #     boost_version: 1.89.0
-      #     platform_version: 2025
-      #     boost_install_dir: ${{ github.workspace }}/../
-      #     toolset: msvc
-      #     arch: aarch64
+      - name: Install boost
+        uses: MarkusJx/install-boost@v2
+        id: install-boost
+        with:
+          boost_version: 1.89.0
+          platform_version: 2025
+          boost_install_dir: ${{ github.workspace }}/../
+          toolset: msvc
+          arch: aarch64
 
-      - name: Download Boost prebuilt
-        shell: bash
-        run: |
-          curl -L https://github.com/lowkeyrossi/prebuilt-boost/releases/download/1.89.0/boost-1.89.0-windows-11-arm-msvc-shared-arm64.tar.gz -o boost.tar.gz
-      
-          # First unpack .tar.gz -> .tar
-          7z x boost.tar.gz -oextract
-      
-          # Then unpack the .tar
-          7z x extract/boost-1.89.0-windows-11-arm-msvc-shared-arm64.tar -oextract
-      
-          # Rename to stable path
-          mv extract/boost-1.89.0-windows-11-arm-msvc-shared-arm64 boost-arm64
-      
-          ls -R boost-arm64
-
-
-    
       - name: Configure CMake
         run: |
           cmake.exe -S . -B generated -G "Visual Studio 17 2022" ^
