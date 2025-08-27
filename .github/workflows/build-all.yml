@@ -315,10 +315,10 @@ jobs:
         with:
           version: '6.9.*'
           host: 'windows'
-          arch: 'win64_msvc2022_arm64'
+          arch: 'win64_msvc2022_arm64_cross_compiled'
           target: 'desktop'
           tools-only: 'false'
-          modules: 'qt5compat qtimageformats qtshadertools'
+          modules: 'qt3d qt5compat qtimageformats qtshadertools'
           tools: 'tools_cmake'
 
           
