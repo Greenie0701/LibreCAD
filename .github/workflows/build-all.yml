@@ -309,39 +309,37 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+          
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.9.*'
+          host: 'windows'
+          arch: 'win64_msvc2022_arm64'
+          target: 'desktop'
+          tools-only: 'false'
+          modules: 'qt5compat qtimageformats qtshadertools'
+          tools: 'tools_cmake'
 
-      # - name: Install Qt6
-      #   uses: jurplel/install-qt-action@v4
-      #   with:
-      #     version: '6.9.*'
-      #     host: 'windows'
-      #     arch: 'win64_msvc2022_arm64_cross_compiled'
-      #     target: 'desktop'
-      #     tools-only: 'false'
-      #     modules: 'qt3d qt5compat qtimageformats qtshadertools'
-      #     tools: 'tools_cmake'
           
       - name: (3) Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: arm64
 
-      - name: Install boost
-        uses: MarkusJx/install-boost@v2
-        id: install-boost
-        with:
-          boost_version: 1.89.0
-          platform_version: 11
-          boost_install_dir: ${{ github.workspace }}/../
-          toolset: arm
-          link: shared
-          arch: aarch64
+      - name: Download Boost (Windows ARM64 prebuilt)
+        run: |
+          curl -O -L https://github.com/MarkusJx/prebuilt-boost/releases/download/1.89.0/boost-1.89.0-windows-11-arm-msvc-shared-aarch64.tar.gz
+          tar xfz boost-1.89.0-windows-11-arm-msvc-shared-aarch64.tar.gz
+          echo "BOOST_ROOT=$PWD/boost" >> $GITHUB_ENV
+          echo "BOOST_INCLUDEDIR=$PWD/boost/include" >> $GITHUB_ENV
+          echo "BOOST_LIBRARYDIR=$PWD/boost/lib" >> $GITHUB_ENV
 
       - name: Configure CMake
         run: |
           cmake.exe -S . -B generated -G "Visual Studio 17 2022" ^
-            -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include ^
-            -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib 
+            -DBoost_INCLUDE_DIR=%BOOST_INCLUDEDIR% ^
+            -DBoost_LIBRARY_DIRS=%BOOST_LIBRARYDIR% ^
         shell: cmd
         env:
           BOOST_ROOT: ${{ github.workspace }}\boost-arm64\boost
