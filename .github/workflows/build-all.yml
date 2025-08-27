@@ -348,12 +348,6 @@ jobs:
           BOOST_ROOT: boost
           CMAKE_CXX_FLAGS: " /MP8"
 
-        shell: cmd
-        env:
-          BOOST_ROOT: ${{ github.workspace }}\boost-arm64\boost
-          BUILD_TYPE: release
-          CMAKE_CXX_FLAGS: " /MP8"
-
       - name: Build
         run: |
           cmake --build generated --config Release
