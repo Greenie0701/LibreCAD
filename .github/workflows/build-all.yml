@@ -331,13 +331,16 @@ jobs:
         run: |
           curl -O -L https://github.com/MarkusJx/prebuilt-boost/releases/download/1.89.0/boost-1.89.0-windows-11-arm-msvc-shared-aarch64.tar.gz
           tar xfz boost-1.89.0-windows-11-arm-msvc-shared-aarch64.tar.gz
+          mkdir -p boost/include
+          mv boost/include/boost-1_89/boost boost/include/
           echo "BOOST_ROOT=$PWD/boost" >> $GITHUB_ENV
-          echo "BOOST_INCLUDEDIR=$PWD/boost/include/boost-1_89" >> $GITHUB_ENV
+          echo "BOOST_INCLUDEDIR=$PWD/boost/include" >> $GITHUB_ENV
           echo "BOOST_LIBRARYDIR=$PWD/boost/lib" >> $GITHUB_ENV
 
       - name: Configure CMake
         run: |
-          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBOOST_ROOT=%BOOST_ROOT% -DBoost_NO_SYSTEM_PATHS=ON -DBoost_INCLUDE_DIR=%BOOST_INCLUDEDIR% -DBoost_LIBRARY_DIRS=%BOOST_LIBRARYDIR%
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib
+
         shell: cmd
         env:
           BOOST_ROOT: ${{ github.workspace }}\boost-arm64\boost
