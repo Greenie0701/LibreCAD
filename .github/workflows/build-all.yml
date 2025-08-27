@@ -337,7 +337,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_INCLUDEDIR% -DBoost_LIBRARY_DIRS=%BOOST_LIBRARYDIR%
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBOOST_ROOT=%BOOST_ROOT% -DBoost_NO_SYSTEM_PATHS=ON -DBoost_INCLUDE_DIR=%BOOST_INCLUDEDIR% -DBoost_LIBRARY_DIRS=%BOOST_LIBRARYDIR%
         shell: cmd
         env:
           BOOST_ROOT: ${{ github.workspace }}\boost-arm64\boost
