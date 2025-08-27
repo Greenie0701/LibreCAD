@@ -331,7 +331,6 @@ jobs:
         run: |
           curl -O -L https://github.com/MarkusJx/prebuilt-boost/releases/download/1.89.0/boost-1.89.0-windows-11-arm-msvc-shared-aarch64.tar.gz
           tar xfz boost-1.89.0-windows-11-arm-msvc-shared-aarch64.tar.gz
-          mkdir -p boost/include
           mv boost/include/boost-1_89/boost boost/include/
           echo "BOOST_ROOT=$PWD/boost" >> $GITHUB_ENV
           echo "BOOST_INCLUDEDIR=$PWD/boost/include" >> $GITHUB_ENV
